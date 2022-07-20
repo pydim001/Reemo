@@ -18,7 +18,8 @@ function Home() {
                 <input type="text" id="gmail-input" />
             </div>
             <div id="para">
-
+                <label className="labels" id="msg-label">Message:</label>
+                <textarea id="msg-input" rows="10" cols="100"></textarea>
             </div>
             <div id="attach">
 
