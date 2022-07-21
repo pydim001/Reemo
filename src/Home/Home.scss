@@ -58,10 +58,34 @@ monospace;
 
 #msg-input {
     @include td-attr(300px, 800px);
-    border-radius: $input-br;
     font-family: $font;
+    padding: 10px;
 }
 
 #para {
     text-align: center;
+}
+
+#attach-input {
+    background-color: aliceblue;
+    @include td-attr(50px, 200px)
+}
+
+#attach {
+    text-align: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#custom-attach-input {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.text {
+    color: aliceblue;
 }

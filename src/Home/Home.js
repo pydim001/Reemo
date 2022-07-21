@@ -22,7 +22,10 @@ function Home() {
                 <textarea id="msg-input" rows="10" cols="100"></textarea>
             </div>
             <div id="attach">
-
+                <label for="attack-input" id="custom-attach-input">
+                    <input type="file" id="attach-input" />
+                    <span className="text">Add Files</span>
+                </label>
             </div>
             <div id="send">
 
