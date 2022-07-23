@@ -28,7 +28,9 @@ function Home() {
                 </label>
             </div>
             <div id="send">
-
+                <p id="send-btn">
+                    Send
+                </p>
             </div>
         </div>
     )
