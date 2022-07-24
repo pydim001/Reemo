@@ -42,10 +42,7 @@ monospace;
     margin-bottom: 50px;
 }
 
-#time-input {
-    @include td-attr($tdh, $tdw);
-}
-
+#time-input,
 #date-input {
     @include td-attr($tdh, $tdw);
 }
@@ -88,6 +85,7 @@ input[type="file"] {
 
 .text {
     color: aliceblue;
+    font-family: $font;
 }
 
 #send-btn {
@@ -96,8 +94,11 @@ input[type="file"] {
     background-color: aliceblue;
     text-align: center;
     border-radius: 10px;
+    border: 0px;
+    font-family: $font;
 }
 
 #send {
+    margin-top: 50px;
     text-align: center;
 }
