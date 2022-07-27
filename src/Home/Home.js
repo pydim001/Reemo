@@ -56,7 +56,7 @@ function Home() {
                 <input type="text" id="gmail-input" onChange={sGmail} />
             </div>
             <div id="para">
-                <label className="labels" id="msg-label">Message:</label>
+                <p className="labels" id="msg-label">Message:</p>
                 <textarea id="msg-input" rows="10" cols="100" onChange={sMsg}></textarea>
             </div>
             <div id="attach">
