@@ -72,3 +72,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ## About
 
 This app is used to communicate to yourself in the future# Reemo
+
+## TechStack
+
+-- React
+-- Node.js
+-- Express.js
+-- MongoDB
