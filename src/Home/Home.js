@@ -1,4 +1,5 @@
 import { useState } from "react";
+import postFetch from "../fetch";
 import "./Home.scss"
 
 function Home() {
@@ -21,22 +22,35 @@ function Home() {
     let minute = null;
 
     //formats date
-    const formatTemp = (date) => {
+    const formatTemp = (date, time) => {
         const dateArr = date.split("-");
         const timeArr = time.split(":");
         [year, month, day] = dateArr;
         [hour, minute] = timeArr;
     }
 
+    //checks if date and time are after the current day
+    //accounts for up to 15 minutes delay
+    const invalidTime = (month, day, year, hour, minute) => {
+        const today = new Date()
+        const [currhour, currmin, currmon, currday, curryear] = [today.getHours(), today.getMinutes(), today.getMonth(), today.getDay(), today.getFullYear()]
+    }
+
+    const [response, setRes] = useState()
+
     //button function to send info
     const send = () => {
+        formatTemp(date, time)
         const info = {
-            date: date,
-            time: time,
-            gmail: gmail,
-            msg: msg
+            "month": month,
+            "day": day,
+            "year": year,
+            "hour": hour,
+            "minute": minute,
+            "gmail": gmail,
+            "msg": msg
         }
-        console.log(info);
+        postFetch("/", info).then(res => { setRes(res) })
     }
 
     return (
