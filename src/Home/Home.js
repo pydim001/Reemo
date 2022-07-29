@@ -1,6 +1,7 @@
 import { useState } from "react";
 import postFetch from "../fetch";
-import "./Home.scss"
+import Error from "../components/Error";
+import "./Home.scss";
 
 function Home() {
 
@@ -21,6 +22,8 @@ function Home() {
     let hour = null;
     let minute = null;
 
+    const [error, setError] = useState()
+
     //formats date
     const formatTemp = (date, time) => {
         const dateArr = date.split("-");
@@ -31,9 +34,28 @@ function Home() {
 
     //checks if date and time are after the current day
     //accounts for up to 15 minutes delay
-    const invalidTime = (month, day, year, hour, minute) => {
+    const validTime = (month, day, year, hour, minute) => {
         const today = new Date()
-        const [currhour, currmin, currmon, currday, curryear] = [today.getHours(), today.getMinutes(), today.getMonth(), today.getDay(), today.getFullYear()]
+        const [currhour,
+            currmin,
+            currmon,
+            currday,
+            curryear] = [today.getHours(),
+            today.getMinutes(),
+            today.getMonth(),
+            today.getDay(),
+            today.getFullYear()]
+        if (curryear <= year) {
+            if (currmon <= month) {
+                if (currday <= day) {
+                    if (currhour <= hour) {
+                        if (currmin + 15 <= minute) {
+                            return true
+                        }
+                    }
+                }
+            }
+        } return false
     }
 
     const [response, setRes] = useState()
@@ -50,11 +72,19 @@ function Home() {
             "gmail": gmail,
             "msg": msg
         }
-        postFetch("/", info).then(res => { setRes(res) })
+        if (validTime(month, day, year, hour, minute)) {
+            setError(false)
+            postFetch("/", info).then(res => { setRes(res) })
+        } else {
+            setError(true)
+        }
     }
 
     return (
         <div id="app">
+            <div>
+                <Error error={error} />
+            </div>
             <div id="when">
                 <div id="date" className="when">
                     <label className="labels">Date:</label>

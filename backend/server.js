@@ -12,6 +12,12 @@ app.use((req, res, next) => {
     }
 })
 
+const sendEmail = () => {
+    const current = new Date()
+}
+
+setInterval(sendEmail, 60000)
+
 app.get("/", (req, res) => {
     res.json({
 
