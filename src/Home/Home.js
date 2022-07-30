@@ -82,7 +82,7 @@ function Home() {
 
     return (
         <div id="app">
-            <div>
+            <div id="err-msg">
                 <Error error={error} />
             </div>
             <div id="when">
