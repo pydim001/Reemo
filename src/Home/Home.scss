@@ -104,6 +104,7 @@ input[type="file"] {
 }
 
 #err-msg {
-    text-align: center;
-    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
 }
