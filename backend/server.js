@@ -3,11 +3,10 @@ const bp = require('body-parser')
 const mongoose = require('mongoose')
 const app = express()
 
-// mongoose.connect('mongodb://localhost/emailinfo', { useNewUrlParser: true })
-// const db = mongoose.connection
-// db.on('error', (error) => { console.error(error) })
-// db.once('open', () => { console.log("Connected to Database") })
+const MsgInfo = require('./models/MsgInfo')
 
+mongoose.connect('mongodb://localhost:27017/emailinfo', {useNewUrlParser: true})
+.catch(err => {console.log(err)})
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -23,27 +22,26 @@ app.use((req, res, next) => {
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
-app.get("/", (req, res) => {
+const sendEmail = () => {
+    const current = new Date()
+}
 
-    const sendEmail = () => {
-        const current = new Date()
-    }
+setInterval(sendEmail, 1000)
 
-    setInterval(sendEmail, 1000)
+app.get("/", async (req, res) => {
     
-    res.json({
+    const msgs = await MsgInfo.find()
 
+    res.json({
+        data: msgs
     })
 })
 
 app.post("/", (req, res) => {
-
     let response = 300
-
     if(req.body !== null){
         response = 200
     }
-
     res.json({
         res: response
     })
