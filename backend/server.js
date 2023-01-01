@@ -1,13 +1,12 @@
-import { validTime } from '../src/Home/Home'
-
 const express = require('express')
+const bp = require('body-parser')
 const mongoose = require('mongoose')
 const app = express()
 
-mongoose.connect('mongodb://localhost/emailinfo', { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', (error) => { console.error(error) })
-db.once('open', () => { console.log("Connected to Database") })
+// mongoose.connect('mongodb://localhost/emailinfo', { useNewUrlParser: true })
+// const db = mongoose.connection
+// db.on('error', (error) => { console.error(error) })
+// db.once('open', () => { console.log("Connected to Database") })
 
 
 app.use((req, res, next) => {
@@ -20,6 +19,9 @@ app.use((req, res, next) => {
         next();
     }
 })
+
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => {
 
@@ -35,7 +37,16 @@ app.get("/", (req, res) => {
 })
 
 app.post("/", (req, res) => {
-    res.sendStatus(200)
+
+    let response = 300
+
+    if(req.body !== null){
+        response = 200
+    }
+
+    res.json({
+        res: response
+    })
 })
 
 app.listen(5000, () => { console.log("Server running on port 5000") })

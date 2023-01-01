@@ -1,4 +1,4 @@
-export default async function postFetch(path, req) {
+export default function postFetch(path, req, func) {
     const data = {
         method: 'POST',
         headers: {
@@ -7,12 +7,16 @@ export default async function postFetch(path, req) {
         body: JSON.stringify(req)
     }
 
-    try {
-        const fetched = await fetch('http://localhost:5000' + path, data)
-        const res = await fetched.json()
-        return res
-    } catch (err) {
-        console.log(err)
-        return "An Error Occured"
-    }
+    console.log("going to fetch")
+
+    fetch('http://localhost:5000' + path, data)
+        .then(res => res.json())
+        .then(data => {
+            console.log("fetched")
+            func(data)
+        })
+        .catch(err => {
+            console.log(err)
+            func("An Error Occured")
+        }) 
 }

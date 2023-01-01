@@ -75,7 +75,7 @@ function Home() {
         }
         if (validTime(month, day, year, hour, minute)) {
             setError(false)
-            postFetch("/", info).then(res => { setRes(res) })
+            postFetch("/", info, setRes)
         } else {
             setError(true)
         }
