@@ -3,6 +3,30 @@ import postFetch from "../fetch";
 import Error from "../components/Error";
 import "./Home.scss";
 
+export const validTime = (month, day, year, hour, minute) => {
+    const today = new Date()
+    const [currhour,
+        currmin,
+        currmon,
+        currday,
+        curryear] = [today.getHours(),
+        today.getMinutes(),
+        today.getMonth(),
+        today.getDay(),
+        today.getFullYear()]
+    if (curryear <= year) {
+        return true
+    }if (currmon <= month) {
+        return true
+    }if (currday <= day) {
+        return true
+    }if (currhour <= hour) {
+        return true
+    }if (currmin + 15 <= minute) {
+        return true
+    }return false
+}
+
 function Home() {
 
     const [date, setDate] = useState();
@@ -34,29 +58,6 @@ function Home() {
 
     //checks if date and time are after the current day
     //accounts for up to 15 minutes delay
-    const validTime = (month, day, year, hour, minute) => {
-        const today = new Date()
-        const [currhour,
-            currmin,
-            currmon,
-            currday,
-            curryear] = [today.getHours(),
-            today.getMinutes(),
-            today.getMonth(),
-            today.getDay(),
-            today.getFullYear()]
-        if (curryear <= year) {
-            if (currmon <= month) {
-                if (currday <= day) {
-                    if (currhour <= hour) {
-                        if (currmin + 15 <= minute) {
-                            return true
-                        }
-                    }
-                }
-            }
-        } return false
-    }
 
     const [response, setRes] = useState()
 
