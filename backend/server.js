@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const app = express()
 
 const MsgInfo = require('./db/MsgInfo')
+const views = require('./db/views')
 
 mongoose.connect('mongodb://localhost:27017/emailinfo', {useNewUrlParser: true})
 .catch(err => {console.log(err)})
@@ -22,11 +23,7 @@ app.use((req, res, next) => {
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
-const sendEmail = () => {
-    const current = new Date()
-}
-
-setInterval(sendEmail, 1000)
+setInterval(views.sendMsg, 1000)
 
 app.get("/", async (req, res) => {
     
