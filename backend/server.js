@@ -3,7 +3,7 @@ const bp = require('body-parser')
 const mongoose = require('mongoose')
 const app = express()
 
-const MsgInfo = require('./models/MsgInfo')
+const MsgInfo = require('./db/MsgInfo')
 
 mongoose.connect('mongodb://localhost:27017/emailinfo', {useNewUrlParser: true})
 .catch(err => {console.log(err)})
@@ -37,14 +37,25 @@ app.get("/", async (req, res) => {
     })
 })
 
-app.post("/", (req, res) => {
+app.post("/", async (req, res) => {
+
+    const msgs = await MsgInfo.find()
+
+    const prevl = msgs.length
+
+    const msg = new MsgInfo(req.body)
+    await msg.save()
+
+    const postl = msgs.length
+
     let response = 300
-    if(req.body !== null){
+    if(postl - prevl < 1){
         response = 200
     }
     res.json({
         res: response
     })
 })
+
 
 app.listen(5000, () => { console.log("Server running on port 5000") })
