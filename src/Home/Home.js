@@ -26,8 +26,8 @@ function Home() {
     const formatTemp = (date, time) => {
         const dateArr = date.split("-");
         const timeArr = time.split(":");
-        [year, month, day] = dateArr;
-        [hour, minute] = timeArr;
+        [year, month, day] = dateArr.map(val => parseInt(val));
+        [hour, minute] = timeArr.map(val => parseInt(val));
     }
 
     //checks if date and time are after the current day
@@ -43,6 +43,8 @@ function Home() {
             today.getMonth(),
             today.getDay(),
             today.getFullYear()]
+            console.log(month, day, year, hour, minute)
+            console.log(currmon + 1, currday + 1, curryear, currhour, currmin)
             if(curryear < year){
                 return true
             }else if(curryear > year){
@@ -53,9 +55,9 @@ function Home() {
                 }else if(currmon + 1 > month){
                     return false
                 }else{
-                    if(currday < day){
+                    if(currday + 1 < day){
                         return true
-                    }else if(currday > day){
+                    }else if(currday + 1> day){
                         return false
                     }else{
                         if(currhour < hour){
@@ -80,7 +82,7 @@ function Home() {
             "year": year,
             "hour": hour,
             "minute": minute,
-            "gmail": gmail,
+            "email": gmail,
             "msg": msg
         }
         const confirm = validTime(month, day, year, hour, minute)

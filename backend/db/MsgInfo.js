@@ -6,8 +6,9 @@ const schema = new mongoose.Schema({
     day: String,
     hour: String,
     minute: String,
-    gmail: String,
-    msg: String
+    email: String,
+    msg: String,
+    attach: Buffer
 })
 
 module.exports = mongoose.model("MsgInfo", schema)

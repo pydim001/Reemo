@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
-setInterval(views.sendMsg, 1000)
+setInterval(views.sendMsg, 60000)
 
 app.get("/", async (req, res) => {
     

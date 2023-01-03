@@ -1,4 +1,6 @@
 const MsgInfo = require("./MsgInfo")
+const mailer = require("nodemailer")
+const emailValidator = require('deep-email-validator');
 
 // if field1 is before field2 return true, else return false
 exports.compare = (field1, field2) => {
@@ -34,7 +36,7 @@ exports.sendMsg = async () => {
         month: date.getMonth() + 1,
         year: date.getFullYear(),
         hour: date.getHours(),
-        day: date.getDay(),
+        day: date.getDay() + 1,
         minute: date.getMinutes()
     }
     for(let msg in msgs){
@@ -50,4 +52,9 @@ exports.clear = async (db) => {
     for(let packet in data){
         await db.deleteOne(packet._id)
     }
+}
+
+exports.validEmail = async (email) => {
+    const response = await emailValidator.validate(email)
+    return response
 }
