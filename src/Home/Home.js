@@ -3,30 +3,6 @@ import postFetch from "../fetch";
 import Error from "../components/Error";
 import "./Home.scss";
 
-export const validTime = (month, day, year, hour, minute) => {
-    const today = new Date()
-    const [currhour,
-        currmin,
-        currmon,
-        currday,
-        curryear] = [today.getHours(),
-        today.getMinutes(),
-        today.getMonth(),
-        today.getDay(),
-        today.getFullYear()]
-    if (curryear <= year) {
-        return true
-    }if (currmon <= month) {
-        return true
-    }if (currday <= day) {
-        return true
-    }if (currhour <= hour) {
-        return true
-    }if (currmin + 15 <= minute) {
-        return true
-    }return false
-}
-
 function Home() {
 
     const [date, setDate] = useState();
@@ -46,8 +22,6 @@ function Home() {
     let hour = null;
     let minute = null;
 
-    const [error, setError] = useState()
-
     //formats date
     const formatTemp = (date, time) => {
         const dateArr = date.split("-");
@@ -58,8 +32,44 @@ function Home() {
 
     //checks if date and time are after the current day
     //accounts for up to 15 minutes delay
+    const validTime = (month, day, year, hour, minute) => {
+        const today = new Date()
+        const [currhour,
+            currmin,
+            currmon,
+            currday,
+            curryear] = [today.getHours(),
+            today.getMinutes(),
+            today.getMonth(),
+            today.getDay(),
+            today.getFullYear()]
+            if(curryear < year){
+                return true
+            }else if(curryear > year){
+                return false
+            }else{
+                if(currmon + 1 < month){
+                    return true
+                }else if(currmon + 1 > month){
+                    return false
+                }else{
+                    if(currday < day){
+                        return true
+                    }else if(currday > day){
+                        return false
+                    }else{
+                        if(currhour < hour){
+                            return true
+                        }else if(currhour > hour){
+                            return false
+                        }return currmin + 15 <= minute
+                    }
+                }
+            }
+    }
 
     const [response, setRes] = useState()
+    const [errorScreen, setErrorScreen] = useState()
 
     //button function to send info
     const send = () => {
@@ -73,18 +83,20 @@ function Home() {
             "gmail": gmail,
             "msg": msg
         }
-        if (validTime(month, day, year, hour, minute)) {
-            setError(false)
+        const confirm = validTime(month, day, year, hour, minute)
+        console.log(confirm)
+        if (confirm) {
+            setErrorScreen(null)
             postFetch("/", info, setRes)
-        } else {
-            setError(true)
+        }else{
+            setErrorScreen(<Error />)
         }
     }
 
     return (
         <div id="app">
             <div id="err-msg">
-                <Error error={error} />
+                {errorScreen}
             </div>
             <div id="when">
                 <div id="date" className="when">
