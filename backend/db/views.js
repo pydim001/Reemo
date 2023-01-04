@@ -31,7 +31,7 @@ exports.compare = (field1, field2) => {
 
 //sends message at the right time
 exports.sendMsg = async () => {
-    let msgs = MsgInfo.find()
+    let msgs = await MsgInfo.find()
     const date = new Date()
     const currdate = {
         month: date.getMonth() + 1,
@@ -40,18 +40,40 @@ exports.sendMsg = async () => {
         day: date.getDay() + 1,
         minute: date.getMinutes()
     }
-    for(let msg in msgs){
+
+    const ct = {
+        service: "gmail",
+        auth: {
+            user: "",
+            pass: ""
+        }
+    }
+    const transporter = mailer.createTransport(ct)
+    for await (const msg of msgs){
         if(this.compare(msg, currdate)){
-            await MsgInfo.deleteOne(msg._id)
+            // const options = {
+            //     from: ct.auth.user,
+            //     to: msg.email,
+            //     subject: "Reemo Message",
+            //     text: msg.msg
+            // }
+            // transporter.sendMail(options, (err, info) => {
+            //     if(err){
+            //         console.log(err)
+            //         return
+            //     }
+            //     console.log(info.response)
+            // })
+            await MsgInfo.deleteOne({_id: msg._id})
         }
     }
 }
 
 // removes all data in a database, for testing purposes
 exports.clear = async (db) => {
-    const data = db.find()
-    for(let packet in data){
-        await db.deleteOne(packet._id)
+    const data = await db.find()
+    for await (const packet of data){
+        await db.deleteOne({_id: packet._id})
     }
 }
 

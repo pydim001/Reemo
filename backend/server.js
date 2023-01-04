@@ -28,7 +28,7 @@ setInterval(views.sendMsg, 60000)
 app.get("/", async (req, res) => {
     
     const msgs = await MsgInfo.find()
-    //views.clear(MsgInfo)
+    // views.clear(MsgInfo)
     res.json({
         data: msgs
     })
