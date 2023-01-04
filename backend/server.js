@@ -35,23 +35,25 @@ app.get("/", async (req, res) => {
 })
 
 app.post("/", async (req, res) => {
-
-    const msgs = await MsgInfo.find()
-
-    const prevl = msgs.length
-
-    const msg = new MsgInfo(req.body)
-    await msg.save()
-
-    const postl = msgs.length
-
-    let response = 300
-    if(postl - prevl < 1){
-        response = 200
+    const validEmailInfo = await views.validEmail(req.body.email)
+    const validEmail = 
+        validEmailInfo.validators.regex.valid &&
+        validEmailInfo.validators.typo.valid &&
+        validEmailInfo.validators.disposable.valid &&
+        validEmailInfo.validators.mx.valid
+    // console.log(validEmailInfo)
+    if(!validEmail){
+        res.json({
+            res: "Invalid Email",
+            err: validEmailInfo.reason
+        })
+    }else{
+        const msg = new MsgInfo(req.body)
+        await msg.save()
+        res.json({
+            res: "OK"
+        })
     }
-    res.json({
-        res: response
-    })
 })
 
 

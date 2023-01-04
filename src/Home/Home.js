@@ -43,8 +43,8 @@ function Home() {
             today.getMonth(),
             today.getDay(),
             today.getFullYear()]
-            console.log(month, day, year, hour, minute)
-            console.log(currmon + 1, currday + 1, curryear, currhour, currmin)
+            // console.log(month, day, year, hour, minute)
+            // console.log(currmon + 1, currday + 1, curryear, currhour, currmin)
             if(curryear < year){
                 return true
             }else if(curryear > year){
@@ -86,7 +86,7 @@ function Home() {
             "msg": msg
         }
         const confirm = validTime(month, day, year, hour, minute)
-        console.log(confirm)
+        //console.log(confirm)
         if (confirm) {
             setErrorScreen(null)
             postFetch("/", info, setRes)
@@ -116,7 +116,7 @@ function Home() {
             </div>
             <div id="para">
                 <p className="labels" id="msg-label">Message:</p>
-                <textarea id="msg-input" rows="10" cols="100" onChange={sMsg}></textarea>
+                <textarea id="msg-input" rows="10" cols="100" onChange={sMsg} maxLength="5000"></textarea>
             </div>
             <div id="attach">
                 <label for="attack-input" id="custom-attach-input">

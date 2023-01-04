@@ -29,6 +29,7 @@ exports.compare = (field1, field2) => {
     }
 }
 
+//sends message at the right time
 exports.sendMsg = async () => {
     let msgs = MsgInfo.find()
     const date = new Date()
@@ -54,6 +55,7 @@ exports.clear = async (db) => {
     }
 }
 
+// checks if email is valid
 exports.validEmail = async (email) => {
     const response = await emailValidator.validate(email)
     return response
