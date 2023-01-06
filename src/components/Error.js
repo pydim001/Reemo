@@ -4,7 +4,7 @@ import "./Error.scss"
 function Error(props) {
     return (
         <div id="err-comp">
-            The time and date you entered has to be atleast fifteen minutes in the future.
+            The time and date you entered has to be in the future.
         </div>
     );
 }

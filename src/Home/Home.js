@@ -31,7 +31,6 @@ function Home() {
     }
 
     //checks if date and time are after the current day
-    //accounts for up to 15 minutes delay
     const validTime = (month, day, year, hour, minute) => {
         const today = new Date()
         const [currhour,
@@ -64,12 +63,13 @@ function Home() {
                             return true
                         }else if(currhour > hour){
                             return false
-                        }return currmin + 15 <= minute
+                        }return currmin <= minute
                     }
                 }
             }
     }
 
+    // eslint-disable-next-line
     const [response, setRes] = useState()
     const [errorScreen, setErrorScreen] = useState()
 
