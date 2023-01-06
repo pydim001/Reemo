@@ -44,27 +44,27 @@ exports.sendMsg = async () => {
     const ct = {
         service: "gmail",
         auth: {
-            user: "",
-            pass: ""
+            user: "reemo010580@gmail.com",
+            pass: "npixsatxizmlxzw"
         }
     }
     const transporter = mailer.createTransport(ct)
     for await (const msg of msgs){
         if(this.compare(msg, currdate)){
-            // const options = {
-            //     from: ct.auth.user,
-            //     to: msg.email,
-            //     subject: "Reemo Message",
-            //     text: msg.msg
-            // }
-            // transporter.sendMail(options, (err, info) => {
-            //     if(err){
-            //         console.log(err)
-            //         return
-            //     }
-            //     console.log(info.response)
-            // })
-            await MsgInfo.deleteOne({_id: msg._id})
+            const options = {
+                from: ct.auth.user,
+                to: msg.email,
+                subject: "Reemo Message",
+                text: msg.msg
+            }
+            transporter.sendMail(options, async (err, info) => {
+                if(err){
+                    console.log(err)
+                }else{
+                    console.log(info.response)
+                    await MsgInfo.deleteOne({_id: msg._id})
+                }   
+            })
         }
     }
 }
