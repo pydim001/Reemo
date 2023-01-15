@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import postFetch from "../fetch";
 import Error from "../components/Error";
 import "./Home.scss";
 
-function Home() {
+function Home() { 
 
     const [date, setDate] = useState();
     const [time, setTime] = useState();
@@ -21,6 +21,24 @@ function Home() {
 
     let hour = null;
     let minute = null;
+
+    const fileRef = useRef(null)
+    const [fileExceed, setFileExceeded] = useState("")
+
+    const getFiles = () => {
+        setFileExceeded("")
+        fileRef.current.click()
+    }
+    const upload = (e) => {
+        let total = 0;
+        for(const file of e.target.files){
+            total += file.size
+            if(total > 10e6){
+                setFileExceeded("Your files exceed 10MB")
+                break
+            }
+        }
+    }
 
     //formats date
     const formatTemp = (date, time) => {
@@ -99,6 +117,7 @@ function Home() {
         <div id="app">
             <div id="err-msg">
                 {errorScreen}
+                {fileExceed}
             </div>
             <div id="when">
                 <div id="date" className="when">
@@ -119,10 +138,10 @@ function Home() {
                 <textarea id="msg-input" rows="10" cols="100" onChange={sMsg} maxLength="5000"></textarea>
             </div>
             <div id="attach">
-                <label for="attack-input" id="custom-attach-input">
-                    <input type="file" id="attach-input" />
+                <input type="file" id="attach-input" ref={fileRef} onChange={upload} multiple />
+                <button for="attack-input" id="custom-attach-input" onClick={getFiles}>
                     <span className="text">Add Files</span>
-                </label>
+                </button>
             </div>
             <div id="send">
                 <button id="send-btn" onClick={send}>

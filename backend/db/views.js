@@ -1,5 +1,4 @@
 const MsgInfo = require("./MsgInfo")
-const mailer = require("nodemailer")
 const emailValidator = require('deep-email-validator');
 
 // if field1 is before field2 return true, else return false
@@ -40,31 +39,9 @@ exports.sendMsg = async () => {
         day: date.getDay() + 1,
         minute: date.getMinutes()
     }
-
-    const ct = {
-        service: "gmail",
-        auth: {
-            user: "reemo010580@gmail.com",
-            pass: "npixsatxizmlxzw"
-        }
-    }
-    const transporter = mailer.createTransport(ct)
     for await (const msg of msgs){
         if(this.compare(msg, currdate)){
-            const options = {
-                from: ct.auth.user,
-                to: msg.email,
-                subject: "Reemo Message",
-                text: msg.msg
-            }
-            transporter.sendMail(options, async (err, info) => {
-                if(err){
-                    console.log(err)
-                }else{
-                    console.log(info.response)
-                    await MsgInfo.deleteOne({_id: msg._id})
-                }   
-            })
+            await MsgInfo.deleteOne({_id: msg._id})
         }
     }
 }
